@@ -177,7 +177,7 @@ ggplot(hate_crimes, aes(x = hs, y = income, colour = urbanization)) +
   theme_bw() + 
   labs(x = "Percentage of adults with a high-school degree",
        y = "Median household income in USD", 
-       title = "Median household income based on level of urbanization and percentage of adults with a high school degree")
+       title = "Median household income based on level of urbanization and percentage of adults \n with a high school degree")
 
 ```
 :::
@@ -222,7 +222,7 @@ Based on your regression table output (and the data visualizations), is median h
 :::
 
 ::: {.callout-important icon="false" collapse="false" title="Problem 10 Answers"}
-* Based on the regression table output median household income is on average `r dollar(abs(coef(med_income_model)[3]))` higher in states with "high" urbanization in comparison to states with "low" urbanization.
+* Based on the regression table output, median household income is on average `r dollar(abs(coef(med_income_model)[3]))` higher in states with "high" urbanization in comparison to states with "low" urbanization.
 :::
 
 ::: {.callout-note icon="false" title="Problem 11"}
@@ -346,7 +346,14 @@ Generate a regression model with `voles` as the response variable `y` and `veg` 
 
 ::: {.callout-important icon="false" collapse="false" title="Problem 17 Answers"}
 ```{r}
-# Type your code and comments inside the code chunk
+voles_mod <- lm(voles ~ veg + soil, vole_trapping)
+ggplot(vole_trapping, aes(x = veg, y = voles, color = soil)) + 
+  geom_point() + 
+  geom_parallel_slopes(se = FALSE) + 
+  theme_bw() + 
+  labs(x = "Percentage of site covered with vegetation",
+       y = "Number of voles", 
+       title = "Number of voles depending on percentage of site covered with vegetation and soil type")
 
 ```
 :::
@@ -356,7 +363,7 @@ Would you recommend to a manager that they try to protect sites with high or low
 :::
 
 ::: {.callout-important icon="false" collapse="false" title="Problem 18 Answers"}
-* Delete this and put your text answer here.
+* I would recommend to protect sites with a high vegetation cover as there is a positive relationship between percentage of site covered with vegetation and number of voles. Hence, protecting areas with high vegetation cover is expected to benefit a larger number of voles.
 :::
 
 ::: {.callout-note icon="false" title="Problem 19"}
@@ -364,10 +371,10 @@ Dry sites are typically a lot less money to purchase and maintain for conservati
 :::
 
 ::: {.callout-important icon="false" collapse="false" title="Problem 19 Answers"}
-* Delete this and put your text answer here.
+* In order to support a population of about 30 voles, a conservation organization has to maintain roughly 57% cover of vegetation at the site.
 
 ```{r}
-# Type your code and comments inside the code chunk
+predict(voles_mod, newdata = tibble(soil = "dry", veg = 57))
 
 ```
 :::
@@ -378,12 +385,12 @@ The Nature Conservancy is looking at purchasing a site for this species (in the 
 
 ::: {.callout-important icon="false" collapse="false" title="Problem 20 Answers"}
 ```{r}
-# Type your code and comments inside the code chunk
+voles_pred <- predict(voles_mod, newdata = tibble(soil = "moist", veg = 40))
 
 
 ```
 
-* Delete this and put your text answer here.
+* Using the regression equation, the expected vole population a site with moist soil and 40% vegetation cover can support is `r round(voles_pred)` voles.
 :::
 
 # Turning in Your Work
